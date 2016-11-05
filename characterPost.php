@@ -1,8 +1,8 @@
 <?php
 include "layout/header.php";
 
-    $characterName = strtolower($_POST['characterName']);
-    $season = $_POST['season'];
+    $characterName =  strtolower( preg_replace('/\s+/','',$_POST['characterName']));
+	$season = $_POST['season'];
     $server = $_POST['server'];
 
     $character = curlFunc("https://$server.api.pvp.net/api/lol/$server/v1.4/summoner/by-name/$characterName?api_key=$apiKey")[1];
@@ -70,15 +70,14 @@ include "layout/header.php";
 
         echo "</ul> </div> <div class='clear'> </div> <div class='wall'>";
 
-        $statsGet = curlFunc("https://$server.api.pvp.net/api/lol/$server/v1.3/stats/by-summoner/$characterId/summary?season=$season&api_key=$apiKey")[1];
-        if ($statsGet == 200) {
-            $statsGet = curlFunc("https://$server.api.pvp.net/api/lol/$server/v1.3/stats/by-summoner/$characterId/summary?season=$season&api_key=$apiKey")[0];
-            foreach ($statsGet['playerStatSummaries'] as $stats) {
-                $totalChampionKills = $stats['aggregatedStats']['totalChampionKills'];
-                $totalMinionKills = $stats['aggregatedStats']['totalMinionKills'];
-                $totalAssists = $stats['aggregatedStats']['totalAssists'];
 
-                echo"
+        $statsGet = curlFunc("https://$server.api.pvp.net/api/lol/$server/v1.3/stats/by-summoner/$characterId/summary?season=$season&api_key=$apiKey")[0];
+        foreach ($statsGet['playerStatSummaries'] as $stats) {
+            $totalChampionKills = $stats['aggregatedStats']['totalChampionKills'];
+            $totalMinionKills = $stats['aggregatedStats']['totalMinionKills'];
+            $totalAssists = $stats['aggregatedStats']['totalAssists'];
+
+            echo"
                 <div class ='data'>
                     <h3>Oyun Modu : <span> $stats[playerStatSummaryType] </span> </h3>
                     <h3>Toplam Kazanma : <span> $stats[wins] </span> </h3>
@@ -87,8 +86,8 @@ include "layout/header.php";
                     <h3>Toplam Asist : <span> $totalAssists </span> </h3>
                 </div>
                 ";
-            }
         }
+        
 
 
 
