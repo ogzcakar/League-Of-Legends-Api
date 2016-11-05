@@ -1,0 +1,11 @@
+RewriteEngine on
+
+RewriteRule ^index$  index.php [L,QSA]
+RewriteRule ^items$  items.php [L,QSA]
+RewriteRule ^character$  character.php [L,QSA]
+RewriteRule ^characterPost$  characterPost.php [L,QSA]
+
+RewriteRule ^champion/([0-9a-zA-Z-_]+)$  champion.php?id=$1 [L,QSA]
+
+#RewriteRule ^news/([0-9]+)$  news.php?id=$1 [L,QSA]
+#RewriteRule ^category/([a-z]+)$  category.php?category=$1 [L,QSA]
